@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title >Calculator</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript">
+		var FirstNum = null;
+		var SecondNum;
+		var Sym;
+		var IsItEnd;
+		var LogCounter = 0;
+
+		function GetNum (button, result) {
+			if (result.innerHTML.length == 23)
+				return;
+			if ((result.innerHTML == 0) || (IsItEnd == true)) {
+				result.innerHTML = null;
+				IsItEnd = false;
+			}
+			result.innerHTML += button.value;
+		}
+		function DeleteAll (result, minilog) {
+			result.innerHTML = 0;
+			minilog.innerHTML = 0;
+			FirstNum = 0;
+			SecondNum = 0;
+		}
+		function DeleteLast (result) {
+			var temp = String(result.innerHTML);
+			temp = temp.slice(0, -1);
+			if (temp.length == 0)
+				temp = 0;
+			result.innerHTML = temp;
+		}
+		function DeleteNum (result) {
+			result.innerHTML = 0;
+		}
+		function Negative (result) {
+			result.innerHTML = -(result.innerHTML);
+		}
+		function Action(button, result, minilog) {
+			FirstNum = Number(result.innerHTML);
+			minilog.innerHTML = FirstNum + ' ' + button.value + ' ';
+			result.innerHTML = 0;
+			Sym = String(button.value);
+		}
+		function Result (result, minilog) {
+			SecondNum = result.innerHTML;
+			minilog.innerHTML = 0;
+			var Output = String(String(FirstNum) + Sym +String(SecondNum));
+			result.innerHTML = eval(Output);
+			IsItEnd = true;
+		}
+		function Draft (result, log) {
+			if (LogCounter == 29)
+				return
+			LogCounter++
+			log.innerHTML += '<br>';
+			log.innerHTML += result.innerHTML;
+		}
+		function Clear (log) {
+			log.innerHTML = null
+			LogCounter = 0;
+		}
+		function Percents (result, minilog) {
+			switch(Sym){
+				case '+': result.innerHTML = FirstNum + FirstNum * Number(result.innerHTML / 100 ); minilog.innerHTML = 0; break;
+				case '-': result.innerHTML = FirstNum - FirstNum * Number(result.innerHTML / 100 ); minilog.innerHTML = 0; break;
+				case '*': result.innerHTML = FirstNum * (result.innerHTML/100); minilog.innerHTML = 0; break;
+				case '/': result.innerHTML = FirstNum / (result.innerHTML/100); minilog.innerHTML = 0;
+			}
+		}
+		function DividingX (result) {
+			result.innerHTML = (1 / Number(result.innerHTML));
+		}
+		function SquareRoot (result){
+			result.innerHTML = Math.sqrt(result.innerHTML);
+		}
+
+	</script>
+
+</head>
+	
+<body>
+	<div id = 'Text'>Online<br>Calculator</div>
+	<div id = 'Log'>
+		<div id = 'LogNumbers'></div>
+		<input type='button' name='ClearLog' id = 'ClearLog' value = 'Clear log' onclick = 'Clear(LogNumbers)'>
+	</div>
+	<div id = 'ContactMeContainer'>
+		<a href="https://vk.com/lambakean"><img id = 'vk-logo' src= 'vk_logo.png'></a>
+		<div id = 'ContactMeCloser'><br>Contact me!</div>
+	</div>
+	<div id = CalcBody  align='center'>
+		<div id = OutputLabel  align='center'>      <!-- 23 -->
+			<div id = 'ResultOutput'  align='center'>
+				0
+			</div>
+			<div id = MiniLog  align='center'>
+				0
+			</div>
+		</div>
+		<div id = 'ButtonsPanel' align='center'>
+			<table id = 'ButtonsTable' align='center'>           <!-- tr - строка, td - коллонна -->
+			  <tr> 
+			  	<td><input class = 'button red' type='button' name='clearlast' value= '←' onclick = 'DeleteLast(ResultOutput)'></td>
+			  	<td><input class = 'button red' type='button' name='CEButton' value = 'CE' onclick = 'DeleteNum(ResultOutput)'></td>
+			  	<td><input class = 'button red' type='button' name='CButton' value = 'C' onclick = 'DeleteAll(ResultOutput, MiniLog)'></td>
+			  	<td><input class = 'button' type='button' name='Negative' value = '±' onclick = 'Negative(ResultOutput)'></td>
+			  	<td><input class = 'button' type='button' name='Draft' value = 'Draft' onclick = 'Draft(ResultOutput, LogNumbers)'></td>
+			  </tr>
+			  <tr> 
+			  	<td><input class = 'button' type='button' name='Seven' value = '7' onclick = 'GetNum(this, ResultOutput)'></td>
+			  	<td><input class = 'button' type='button' name='Eight' value = '8' onclick = 'GetNum(this, ResultOutput)'></td>
+			  	<td><input class = 'button' type='button' name='Nine' value = '9' onclick = 'GetNum(this, ResultOutput)'></td>
+			  	<td><input class = 'button' type='button' name='Dividing' value = '/' onclick = 'Action(this, ResultOutput, MiniLog)'></td>
+			  	<td><input class = 'button' type='button' name='Percent' value = '%' onclick = 'Percents(ResultOutput, MiniLog)'></td>
+			  </tr>
+			  <tr> 
+			  	<td><input class = 'button' type='button' name='Four' value = '4' onclick = 'GetNum(this, ResultOutput)'></td>
+			  	<td><input class = 'button' type='button' name='Five' value = '5' onclick = 'GetNum(this, ResultOutput)'></td>
+			  	<td><input class = 'button' type='button' name='Six' value = '6' onclick = 'GetNum(this, ResultOutput)'></td>
+			  	<td><input class = 'button' type='button' name='Times' value = '*' onclick = 'Action(this, ResultOutput, MiniLog)'></td>
+			  	<td><input class = 'button' type='button' name='DividingX' value = '1/x' onclick = 'DividingX(ResultOutput)'></td>
+			  </tr>
+			  <tr> 
+			  	<td><input class = 'button' type='button' name='One' value = '1' onclick = 'GetNum(this, ResultOutput)'></td>
+			  	<td><input class = 'button' type='button' name='Two' value = '2' onclick = 'GetNum(this, ResultOutput)'></td>
+			  	<td><input class = 'button' type='button' name='Three' value = '3' onclick = 'GetNum(this, ResultOutput)'></td>
+			  	<td><input class = 'button' type='button' name='Minus' value = '-' onclick = 'Action(this, ResultOutput, MiniLog)'></td>
+			  	<td><input class = 'button' type='button' name='SquareRoot' value = '√' onclick = 'SquareRoot(ResultOutput)'></td>
+			  </tr>
+			  <tr> 
+			  	<td><input class = 'button' type='button' name='Zero' value = '0' onclick = 'GetNum(this, ResultOutput)'></td>
+			  	<td><input class = 'button' type='button' name='Dot' value = '.' onclick = 'GetNum(this, ResultOutput)'></td>
+			  	<td><input class = 'button green' type='button' name='Result' value = '=' onclick = 'Result(ResultOutput, MiniLog)'></td>
+			  	<td><input class = 'button' type='button' name='Plus' value = '+' onclick = 'Action(this, ResultOutput, MiniLog)'></td>
+			  </tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</body>
+
+</html>
